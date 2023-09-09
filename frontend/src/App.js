@@ -26,7 +26,8 @@ const jobs = [
       "Experience with version control systems (e.g., Git)"
     ],
     "salary": "$80,000 - $100,000 per year",
-    "description": "Join our team as a skilled Frontend Developer responsible for developing user interfaces and implementing interactive web features."
+    "description": "Join our team as a skilled Frontend Developer responsible for developing user interfaces and implementing interactive web features.",
+    "url":"https://img.freepik.com/free-vector/frontend-development-concept-website-interface-design-improvement-web-page-programming-coding-testing-it-profession-isolated-flat-vector-illustration_613284-2357.jpg?size=626&ext=jpg&ga=GA1.2.1807596171.1678537696&semt=ais"
   },
   {
     "id": 2,
@@ -45,7 +46,8 @@ const jobs = [
       "Familiarity with cloud services (e.g., AWS, Azure)"
     ],
     "salary": "$90,000 - $120,000 per year",
-    "description": "We are seeking an experienced Backend Engineer to work on our server-side applications."
+    "description": "We are seeking an experienced Backend Engineer to work on our server-side applications.",
+    "url":"https://img.freepik.com/premium-vector/programmer-coding-laptop-software-developer-work-with-business-project-structures-systems-analyzing-data-program-development-concept-flat-vector-illustration-isolated-white-background_633472-597.jpg?size=626&ext=jpg&ga=GA1.1.1807596171.1678537696&semt=ais"
   },
   {
     "id": 3,
@@ -64,7 +66,8 @@ const jobs = [
       "Experience with big data technologies (e.g., Hadoop, Spark)"
     ],
     "salary": "$100,000 - $130,000 per year",
-    "description": "Join us as a Data Scientist to analyze large datasets and extract valuable insights."
+    "description": "Join us as a Data Scientist to analyze large datasets and extract valuable insights.",
+    "url":"https://img.freepik.com/free-vector/data-analysis-concept-illustration_114360-8013.jpg?size=626&ext=jpg&ga=GA1.2.1807596171.1678537696&semt=ais"
   },
   {
     "id": 4,
@@ -83,7 +86,8 @@ const jobs = [
       "Ability to create wireframes and prototypes"
     ],
     "salary": "$75,000 - $95,000 per year",
-    "description": "We are seeking a creative UI/UX Designer to create visually appealing and user-friendly interfaces."
+    "description": "We are seeking a creative UI/UX Designer to create visually appealing and user-friendly interfaces.",
+    "url":"https://img.freepik.com/free-vector/ux-ui-typographic-header-app-interface-improvement-user-interface-design-user-experience-development-modern-technology-concept-flat-vector-illustration_613284-1484.jpg?size=626&ext=jpg&ga=GA1.2.1807596171.1678537696&semt=ais"
   },
   {
     "id": 5,
@@ -102,7 +106,8 @@ const jobs = [
       "Experience with web application development"
     ],
     "salary": "$85,000 - $110,000 per year",
-    "description": "Join our team as a Software Engineer and work on cutting-edge software projects."
+    "description": "Join our team as a Software Engineer and work on cutting-edge software projects.",
+    "url":"https://img.freepik.com/free-vector/online-games-addiction-concept-illustration_114360-2014.jpg?size=626&ext=jpg&ga=GA1.2.1807596171.1678537696&semt=ais"
   },
   {
     "id": 6,
@@ -121,7 +126,8 @@ const jobs = [
       "Knowledge of SEO, SEM, and social media advertising"
     ],
     "salary": "$90,000 - $120,000 per year",
-    "description": "We are looking for an experienced Marketing Manager to lead our marketing efforts."
+    "description": "We are looking for an experienced Marketing Manager to lead our marketing efforts.",
+    "url":"https://img.freepik.com/free-vector/marketing-consulting-concept-illustration_114360-9149.jpg?size=626&ext=jpg&ga=GA1.2.1807596171.1678537696&semt=ais"
   },
   {
     "id": 7,
@@ -140,7 +146,8 @@ const jobs = [
       "Familiarity with CRM software"
     ],
     "salary": "$70,000 - $90,000 per year",
-    "description": "Join our sales team as a Sales Representative and drive business growth through effective sales strategies."
+    "description": "Join our sales team as a Sales Representative and drive business growth through effective sales strategies.",
+    "url":"https://img.freepik.com/free-vector/customer-relationship-management-concept-illustration_114360-7442.jpg?size=626&ext=jpg&ga=GA1.1.1807596171.1678537696&semt=ais"
   },
   {
     "id": 8,
@@ -159,7 +166,8 @@ const jobs = [
       "Strong problem-solving and troubleshooting skills"
     ],
     "salary": "$95,000 - $125,000 per year",
-    "description": "We are seeking a skilled DevOps Engineer to manage and optimize our cloud infrastructure."
+    "description": "We are seeking a skilled DevOps Engineer to manage and optimize our cloud infrastructure.",
+    "url":"https://img.freepik.com/premium-vector/devops-process-tiny-programmer-practice-development-software-operations-software-enginee_501813-784.jpg?size=626&ext=jpg&ga=GA1.2.1807596171.1678537696&semt=ais"
   },
   {
     "id": 9,
@@ -178,7 +186,8 @@ const jobs = [
       "Excellent organizational and communication skills"
     ],
     "salary": "$85,000 - $110,000 per year",
-    "description": "Join our HR team as an HR Manager and play a key role in managing human resources functions."
+    "description": "Join our HR team as an HR Manager and play a key role in managing human resources functions.",
+    "url":"https://img.freepik.com/free-vector/human-resource-manager-sitting-desk-with-resumes-top-view_613284-1632.jpg?size=626&ext=jpg&ga=GA1.2.1807596171.1678537696&semt=ais"
   }
 ]
 
