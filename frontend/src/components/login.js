@@ -18,7 +18,8 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    localStorage.setItem('email',email)
+    console.log(localStorage.getItem('email'))
     // Implement your login logic here
     if (email === 'user@example.com' && password === 'password') {
       // Successful login, you can redirect or set a token here
