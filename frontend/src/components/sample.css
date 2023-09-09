@@ -1,0 +1,17 @@
+.JobListingsCustom{
+    background-color: rgb(77, 141, 224);
+}
+.JobListingsCon{
+    display: flex;
+    margin-left: 10%;
+}
+.JobListingsCon1{
+    padding-left: 50px;
+    width: 80%;
+    
+}
+.JobListingsConImage{
+    width: 250px;
+    height: 250px;
+    margin-right: 50px;
+}
