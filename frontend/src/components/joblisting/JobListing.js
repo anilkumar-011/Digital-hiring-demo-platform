@@ -1,8 +1,11 @@
 // JobListing.js
 
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
 
 const JobListing = ({ job }) => {
+  const navigate=useNavigate()
   return (
     <div className="bg-white shadow-lg rounded-lg overflow-hidden m-4">
       <div className="px-6 py-4">
@@ -17,7 +20,7 @@ const JobListing = ({ job }) => {
         </ul>
       </div>
       <div className="px-6 py-4">
-        <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full">
+        <button onClick={()=>navigate('/interview')} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full">
           Take Interview
         </button>
       </div>
