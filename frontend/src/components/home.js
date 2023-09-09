@@ -5,8 +5,8 @@ const Home = () => {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Header Section */}
-      <header className= " bg-blue-500 p-4 text-white ">
-        <div className="container mx-auto ">
+      <header className= " bg-blue-400 p-4 text-white ">
+        <div className="container w-[50%] text-center  ">
           <h1 className="text-4xl font-bold">Welcome to Akatsuki</h1>
           <p className="mt-2 text-lg">Your trusted platform for hiring professionals.</p>
         </div>

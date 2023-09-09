@@ -1,5 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import VideoRecorder from './VideoRecorder';
+import { Bar } from 'react-chartjs-2';
+
+
+const response = {
+  eyecontact: 20,
+  face_matched: true,
+  jd_score: 30,
+  leetcode: {
+    easy: 1 / 12,
+    medium: 14 / 240,
+    hard: 16 / 100,
+    'active days': 45,
+  },
+  github: {
+    username: 'xyz',
+    'last commit': 12,
+  },
+};
+
+const DisplayResponse = () => {
+  return (
+    <div className="container mx-auto p-4">
+      <p>results page</p>
+    </div>
+  );
+};
+
 
 
 function Interview(jobs) {
@@ -18,15 +45,17 @@ function Interview(jobs) {
       ]
     }
   )
+  const [jobIndex, setJobIndex]=useState(0)
   useEffect(() => {
     const jobUrl = window.location.href.split('/');
-    const jobIndex = jobUrl[jobUrl.length - 1];
+    setJobIndex(jobUrl[jobUrl.length - 1]);
     setJob(jobs[jobIndex]);
 
   })
   //  resume upload
   const [resume, setResume] = useState(null);
   const [uploadResume, setUploadResume] = useState(true)
+  const [prevresults, setPrevresults]=useState(false)
 
   const handleResumeUpload = (e) => {
     const file = e.target.files[0];
@@ -68,7 +97,7 @@ function Interview(jobs) {
           </div>
         )
       }
-
+  {<DisplayResponse /> && prevresults }
       {
         !uploadResume && (
           <div className="min-h-screen bg-blue-200 flex flex-col items-center justify-center p-10">
@@ -83,7 +112,7 @@ function Interview(jobs) {
                 </div>
               ) : (
                 <div className=" border border-gray-3 rounded-lg relative">
-                  <VideoRecorder />
+                  <VideoRecorder id={jobIndex} />
                 </div>
               )}
             </div>
@@ -97,7 +126,7 @@ function Interview(jobs) {
           </div>
         )
       }
-
+      
     </>
   )
 }

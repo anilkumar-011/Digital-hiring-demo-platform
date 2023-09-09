@@ -2,14 +2,15 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 const Login = () => {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState(''); // Change 'email' to 'username'
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const navigate=useNavigate()
+  const navigate = useNavigate();
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value); // Update the state variable
   };
 
   const handlePasswordChange = (e) => {
@@ -18,16 +19,17 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    localStorage.setItem('email',email)
-    console.log(localStorage.getItem('email'))
+    localStorage.setItem('username', username); // Update 'email' to 'username'
+    console.log(localStorage.getItem('username'));
+
     // Implement your login logic here
-    if (email === 'user@example.com' && password === 'password') {
+    if (username === 'user@example.com' && password === 'password') {
       // Successful login, you can redirect or set a token here
       setError('');
       alert('Logged in successfully!');
     } else {
       // Display an error message for unsuccessful login
-      setError('Invalid email or password');
+      setError('Invalid username or password');
     }
   };
 
@@ -44,16 +46,16 @@ const Login = () => {
         </div>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="email" className="block text-gray-300">
-              Email
+            <label htmlFor="username" className="block text-gray-300">
+              Username {/* Change label text to 'Username' */}
             </label>
             <input
-              type="email"
-              id="email"
+              type="text" // Change 'email' to 'text'
+              id="username" // Change 'email' to 'username'
               className="w-full p-2 border rounded-md bg-gray-700 text-white"
-              placeholder="Enter your email"
-              value={email}
-              onChange={handleEmailChange}
+              placeholder="Enter your username" // Update placeholder text
+              value={username}
+              onChange={handleUsernameChange} // Update the onChange handler
               required
             />
           </div>
@@ -84,10 +86,14 @@ const Login = () => {
         <div className="mt-4 text-center">
           <p className="text-gray-400">Or create an account: </p>
           <div className="flex justify-center mt-2">
-            <button onClick={()=>{navigate('/signup')}} className="bg-blue-500 text-white px-4 py-2 rounded-md mx-2 hover:bg-blue-600">
+            <button
+              onClick={() => {
+                navigate('/signup');
+              }}
+              className="bg-blue-500 text-white px-4 py-2 rounded-md mx-2 hover:bg-blue-600"
+            >
               Register
             </button>
-        
           </div>
         </div>
       </div>
