@@ -11,6 +11,7 @@ import SignUp from "./components/signup";
 
 const jobs = [
   {
+    "id": 1,
     "jobTitle": "Frontend Developer",
     "location": "San Francisco, CA",
     "salary": "$80,000 - $100,000 per year",
@@ -23,6 +24,7 @@ const jobs = [
     ]
   },
   {
+    "id": 2,
     "jobTitle": "Backend Engineer",
     "location": "New York, NY",
     "salary": "$90,000 - $120,000 per year",
@@ -35,6 +37,7 @@ const jobs = [
     ]
   },
   {
+    "id": 3,
     "jobTitle": "Data Scientist",
     "location": "Chicago, IL",
     "salary": "$100,000 - $130,000 per year",
@@ -47,6 +50,7 @@ const jobs = [
     ]
   },
   {
+    "id": 4,
     "jobTitle": "UI/UX Designer",
     "location": "Seattle, WA",
     "salary": "$75,000 - $95,000 per year",
@@ -58,7 +62,8 @@ const jobs = [
       "Understanding of user-centered design principles"
     ]
   }
-]
+];
+
 function Navigate() {
   return (
     <div>

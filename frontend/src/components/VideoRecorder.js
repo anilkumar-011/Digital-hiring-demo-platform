@@ -3,6 +3,7 @@
 import React, { Component } from "react";
 import RecordRTC from "recordrtc";
 
+
 class VideoRecorder extends Component {
   constructor(props) {
     super(props);
@@ -10,6 +11,7 @@ class VideoRecorder extends Component {
       recording: false,
       videoSrc: null,
       recorder: null,
+      showControls: false,
     };
     this.videoElement = React.createRef();
   }
@@ -30,6 +32,7 @@ class VideoRecorder extends Component {
     this.setState({
       recording: true,
       recorder,
+      showControls: false,
     });
   };
 
@@ -41,6 +44,7 @@ class VideoRecorder extends Component {
       this.setState({
         recording: false,
         videoSrc: videoUrl,
+        showControls: true,
       });
     });
   };
@@ -51,12 +55,14 @@ class VideoRecorder extends Component {
     try {
       const blob = await recorder.getBlob(); // Get the video blob from the recorder
       const formData = new FormData();
-      formData.append("video", blob);
+      formData.append("video", blob,'video.mp4');
 
       const response = await fetch("http://127.0.0.1:8000/upload", {
         method: "POST",
         body: formData,
-      });
+      }).catch((err)=>{
+        console.log(err)
+      })
 
       if (response.ok) {
         console.log("Video sent to the server successfully.");
@@ -68,11 +74,27 @@ class VideoRecorder extends Component {
     }
   };
 
+  retakeRecording = () => {
+    this.state.recorder.reset();
+    this.setState({
+      videoSrc: null,
+      showControls: false,
+    });
+  };
+
+  replayRecording = () => {
+    this.videoElement.current.play();
+  };
+
   render() {
-    const { recording, videoSrc } = this.state;
+    const { recording, videoSrc, showControls } = this.state;
 
     return (
-      <div className="p-4">
+      <div className="p-4 min-h-screen flex flex-col items-center justify-center">
+        <div className="mb-4">
+          <h1 className="text-2xl font-semibold mb-2">Video Interview Room</h1>
+          <p className="text-gray-500">Join the interview session</p>
+        </div>
         <video
           ref={this.videoElement}
           src={videoSrc}
@@ -83,7 +105,7 @@ class VideoRecorder extends Component {
           {recording ? (
             <button
               onClick={this.stopRecording}
-              className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg"
+              className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg mr-2"
             >
               Stop Recording
             </button>
@@ -95,13 +117,27 @@ class VideoRecorder extends Component {
               Start Recording
             </button>
           )}
-          {!recording && videoSrc && (
-            <button
-              onClick={this.SaveRecording}
-              className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg ml-2"
-            >
-              Save Recording
-            </button>
+          {showControls && (
+            <>
+              <button
+                onClick={this.retakeRecording}
+                className="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg ml-2"
+              >
+                Retake
+              </button>
+              <button
+                onClick={this.replayRecording}
+                className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg ml-2"
+              >
+                Replay
+              </button>
+              <button
+                onClick={this.SaveRecording}
+                className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg ml-2"
+              >
+                Save Recording
+              </button>
+            </>
           )}
         </div>
       </div>

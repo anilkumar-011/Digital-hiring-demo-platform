@@ -5,7 +5,7 @@ import os
 app = Flask(__name__)
 CORS(app)
 
-upload_folder = "D://github//techolution//uploaded"
+upload_folder = "D://Work//Techolution_akatsuki//files"
 app.config['UPLOAD_FOLDER'] = upload_folder
 
 @app.route('/upload', methods=['POST'])
