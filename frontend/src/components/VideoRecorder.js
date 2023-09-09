@@ -59,7 +59,7 @@ class VideoRecorder extends Component {
 
       const response = await fetch("http://127.0.0.1:8000/upload", {
         method: "POST",
-        body: formData,
+        body: formData, 
       }).catch((err)=>{
         console.log(err)
       })
@@ -90,18 +90,14 @@ class VideoRecorder extends Component {
     const { recording, videoSrc, showControls } = this.state;
 
     return (
-      <div className="p-4 min-h-screen flex flex-col items-center justify-center">
-        <div className="mb-4">
-          <h1 className="text-2xl font-semibold mb-2">Video Interview Room</h1>
-          <p className="text-gray-500">Join the interview session</p>
-        </div>
+      <div className=" mx-auto my-auto w-[80%] p-2">
         <video
           ref={this.videoElement}
           src={videoSrc}
-          className="border rounded-lg"
+          className="border rounded-lg mx-auto w-[50%] h-[30%]"
           controls
         />
-        <div className="mt-4">
+        <div className="mt-4 mx-auto flex justify-center">
           {recording ? (
             <button
               onClick={this.stopRecording}

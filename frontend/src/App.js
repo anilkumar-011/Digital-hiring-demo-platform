@@ -4,14 +4,13 @@ import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import Home from "./components/home";
 import ResultsPage from "./components/result";
 import Interview from "./components/interview";
-import VideoRecorder from "./components/VideoRecorder";
 import Login from "./components/login";
 import JobListings from "./components/joblisting/JobListings";
 import SignUp from "./components/signup";
 
 const jobs = [
   {
-    "id": 1,
+    "id": 0,
     "jobTitle": "Frontend Developer",
     "location": "San Francisco, CA",
     "salary": "$80,000 - $100,000 per year",
@@ -24,7 +23,7 @@ const jobs = [
     ]
   },
   {
-    "id": 2,
+    "id": 1,
     "jobTitle": "Backend Engineer",
     "location": "New York, NY",
     "salary": "$90,000 - $120,000 per year",
@@ -37,7 +36,7 @@ const jobs = [
     ]
   },
   {
-    "id": 3,
+    "id": 2,
     "jobTitle": "Data Scientist",
     "location": "Chicago, IL",
     "salary": "$100,000 - $130,000 per year",
@@ -50,7 +49,7 @@ const jobs = [
     ]
   },
   {
-    "id": 4,
+    "id": 3,
     "jobTitle": "UI/UX Designer",
     "location": "Seattle, WA",
     "salary": "$75,000 - $95,000 per year",
@@ -80,12 +79,10 @@ function Navigate() {
         </div>
         <Routes>
           <Route path="/" element={<Home />}></Route>
-          <Route path="/interview" element={<Interview />}></Route>
+          <Route path="/interview/:id" element={<Interview jobs={jobs} />}></Route>
           <Route path="/results" element={<ResultsPage />}></Route>
-          <Route path="/video" element={<VideoRecorder />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/signup" element={<SignUp />}></Route>
-          <Route path="/jobs" element={<JobListings jobs={jobs} />}></Route>
         </Routes>
       </BrowserRouter>
     </div>
