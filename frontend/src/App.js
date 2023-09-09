@@ -83,6 +83,7 @@ function Navigate() {
           <Route path="/results" element={<ResultsPage />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/signup" element={<SignUp />}></Route>
+          <Route path="/jobs" element={<JobListings jobs={jobs} />}></Route>
         </Routes>
       </BrowserRouter>
     </div>
