@@ -1,71 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import "chart.js/auto";
 import "../components/sample.css";
 
 import { Line, Bar, Pie,Doughnut } from "react-chartjs-2";
+const Score = () => {
 
-// const data = {
-//   labels: ["Apples", "Bananas", "Cherries", "Grapes"],
-//   datasets: [
-//     {
-//       label: "Number of Fruits",
-//       backgroundColor: "rgba(75,192,192,1)",
-//       borderColor: "rgba(75,192,192,1)",
-//       borderWidth: 1,
-//       hoverBackgroundColor: "rgba(75,192,192,0.4)",
-//       hoverBorderColor: "rgba(75,192,192,1)",
-//       data: [10, 5, 8, 12],
-//     },
-//   ],
-// };
 const scores=localStorage.getItem('scores')
-console.log(scores)
-// const response1 = 
-// {
-//     'eyecontact': 20,
-//     'face_matched': true,
-//     'jd_score': 30,
-//     'leetcode': {
-//       'easy': 1 / 12 ,
-//       'medium': 14 / 240 ,
-//       'hard': 16 / 100 ,
-//       'active days': 45 ,
-//     },
-//     'github': {
-//       'username': 'xyz',
-//       'last commit': 12,
-//     },
-//   }
-  const response ={
-    "_id": {
-      "$oid": "64fd59a394e2ec9baba16696"
-    },
-    "job_d": "1",
-    "results": true,
-    "eye_contact_time": 49,
-    "Jd_score": 43.17,
-    "leetcode": {
-      "problem_sloved": [
-        "Easy112/714Beats92.7",
-        "Medium24/1510Beats61.0",
-        "Hard0/627Not enough data"
-      ],
-      "active days": "41"
-    },
-    "github": {
-      "username": "Pavan Kumar Settem",
-      "contributions": "150"
-    }
-  }
 
-  const res = response.leetcode.problem_sloved;
+  const response =useContext(MyContext)
+
+  const res = response.leetcode[0];
 
     const extractedValues = res.map((str) => {
     const match = str.match(/(\w+\d+\/\d+)/);
     return match ? match[0] : null;
     });
 
-    console.log(extractedValues);
+    // console.log(extractedValues);
 
 
     let easyValue = (extractedValues[0].slice(4).split("/"))
@@ -79,8 +30,8 @@ console.log(scores)
 
 let face_score = 5;
 if(true){let face_score = 5}else{let face_score=0}
-const overallScore = (response.eye_contact_time/60 * 20)+(face_score)+(response.Jd_score/100 * 50)+(response.github.contributions/500 *5)+(response.leetcode["active days"]/100 *20)
-console.log(overallScore)
+const overallScore = (response.eye_contact_time/60 * 20)+(face_score)+(response.Jd_score/100 * 50)+(response.github[1]/500 *5)+(response.leetcode[1]/100 *20)
+// console.log(overallScore)
   const responseDataEasy = {
     labels: ["Easy", "Total Easy"],
     datasets: [
@@ -133,7 +84,7 @@ console.log(overallScore)
         borderWidth: 1,
         hoverBackgroundColor: ['rgba(75, 192, 192, 0.8)', 'rgba(255, 99, 132, 0.8)', 'rgba(255, 206, 86, 0.8)', 'rgba(54, 162, 235, 0.8)',"rgba(31, 7, 246, 1.41)"],
         hoverBorderColor: "rgba(0,0,0,0)",
-        data: [response.eye_contact_time/60 * 20, face_score, response.Jd_score/100 * 50, response.github.contributions/500 *5, response.leetcode["active days"]/100 *20],
+        data: [response.eye_contact_time/60 * 20, face_score, response.Jd_score/100 * 50, response.github[1]/500 *5, response.leetcode[1]/100 *20],
       },
     ],
   };
@@ -171,7 +122,7 @@ console.log(overallScore)
     },
   };
 
-const Score = () => {
+
   return (
     <div className="scoreMain">
         <div className="text-center text-3xl font-semibold mt-3">Score Summary</div>

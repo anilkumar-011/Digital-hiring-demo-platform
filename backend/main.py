@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify,json
 from flask_cors import CORS
 import os
 from pymongo import MongoClient
@@ -6,6 +6,8 @@ from pymongo import MongoClient
 from eye_tracker import eye_tracker_func
 from ATT import transcribe
 from scrappers import activate_scrappers
+from pymongo import MongoClient
+from bson import ObjectId  # Import ObjectId from bson module
 
 app = Flask(__name__)
 CORS(app)
@@ -18,7 +20,7 @@ mongo_uri = "mongodb+srv://Admin:Password@cluster0.qyexdxz.mongodb.net/"  # Repl
 # Connect to MongoDB using the connection string
 client = MongoClient(mongo_uri)
 db = client["Results"]
-
+name='name'
 
 
 def allowed_file(filename):
@@ -70,6 +72,7 @@ def upload_file():
 
         #  Assuming you have 'app' and 'file' defined earlier
         uploaded_file_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename).replace('/', '\\')
+        print(uploaded_file_path)
 
         # Extract the last part of the file path (the file name)
         file_name = os.path.basename(uploaded_file_path)
@@ -78,8 +81,8 @@ def upload_file():
         name_parts = file_name.split('_')
         name_parts[-1] = name_parts[-1].split('.')[0]
 
-        eye_contact_time = eye_tracker_func(uploaded_file_path)
-        print("eye_contact_time :",eye_contact_time)
+        # eye_contact_time = eye_tracker_func(uploaded_file_path)
+        # print("eye_contact_time :",eye_contact_time)
 
         score = transcribe(uploaded_file_path)
         print("Jd_score", score)
@@ -91,13 +94,15 @@ def upload_file():
 
         db = client["utils"]
         collections = db['job_description']
-
+        temp_company = collections.find_one({"id": int(name_parts[-1])})
+        global name
+        name=name_parts[0]
         data ={
             "job_d" : name_parts[-1],
             "username" : name_parts[0],
-            'company': collections.find_one({"id": name_parts[-1]}).get("company"),
+            'company': temp_company.get("company"),
             "results": True,
-            "eye_contact_time": eye_contact_time,
+            "eye_contact_time": 0,
             "Jd_score": score,
             'leetcode': {
                 'problem_sloved': stats[-2],
@@ -112,11 +117,11 @@ def upload_file():
         print(data)
 
         # collection = db[name_parts[0]]
-        # user_id = db[name_parts[0]].insert_one(data)
-        # return jsonify({"message": f"User registered with ID: {user_id}"}), 201
+        user_id = db[name_parts[0]].insert_one(data)
+        return jsonify({"message": f"User registered with ID: {user_id}"}), 201
 
-        db[name_parts[0]].insert_one(data)
-        return jsonify(data)
+        # db[name_parts[0]].insert_one(data)
+        # return jsonify(data)
     
     except Exception as error:
         print(error)
@@ -126,31 +131,43 @@ def upload_file():
 
 @app.route('/get_user_results', methods=['GET'])
 def get_user_data():
-    collection = db["user_1"]
+    db = client["utils"]
+    print(name)
+    collection = db[name]
     # Retrieve all entries from the collection
-    user_data = list(collection.find({}))
+    user_data = list(collection.find())
 
-    # Convert MongoDB documents to a JSON response
+    # Convert ObjectId values to string representation in each document
+    for user_entry in user_data:
+        user_entry["_id"] = str(user_entry["_id"])
+
+    # Convert the list of dictionaries to a JSON response
     response = jsonify(user_data)
-    
+
     # Optionally, you can set the response's content type to JSON
     response.headers['Content-Type'] = 'application/json'
-    print(response)
-    
-    return jsonify(response)
+
+    return response
 
 @app.route('/get_jd', methods=['GET'])
 def get_data():
-    # Query the collection to retrieve all documents
-    db = client["utils"]
-    collections = db['job_description']
-    all_documents = collections.find()
+    try:
+        db = client["utils"]
+        collections = db['job_description']
+
+        all_documents = collections.find()
+        document_list = list(all_documents)
+        
+        # Convert ObjectId values to their string representation in the JSON response
+        for doc in document_list:
+            doc["_id"] = str(doc["_id"])
+
+        # Return the list of dictionaries as a JSON response
+        return json.dumps(document_list)
     
-    # Convert the cursor to a list of dictionaries
-    document_list = list(all_documents)
-    
-    # Return the list of dictionaries as JSON
-    return jsonify(document_list)
+    except Exception as error:
+        print(error)
+        return "Not found"
 
 if __name__ == '__main__':
     app.run(debug=True, port=8000)

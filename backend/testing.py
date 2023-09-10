@@ -1,18 +1,14 @@
 from pymongo import MongoClient
 # MongoDB connection
+import os
 mongo_uri = "mongodb+srv://Admin:Password@cluster0.qyexdxz.mongodb.net/"  # Replace with your MongoDB connection string
 # Connect to MongoDB using the connection string
 client = MongoClient(mongo_uri)
 db = client["utils"]
 collections = db['job_description']
-
-# result = collections.find_one({"id": 1})
-
-# if result:
-#     # If a matching item is found, extract and return the company name
-#     print(result.get("company"))
-# else:
-#     print("not found")
+temp_company = collections.find_one({"id": 1})
+data = temp_company.get("company")
+print(data)
 
 # jobs = [
 #   {
