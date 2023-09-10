@@ -1,7 +1,9 @@
 import React from 'react';
 import "../components/home.css"
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
+  const navigate=useNavigate()
   return (
     <div className="flex flex-col min-h-screen">
       {/* Header Section */}
@@ -28,7 +30,7 @@ const Home = () => {
       </div>
 
       {/* Main Content Section */}
-      {/* <main className="container mx-auto py-8 flex-grow">
+      <main className="container mx-auto py-8 flex-grow">
         <section className="text-center">
           <h2 className="text-2xl font-bold">Find the Perfect Professional</h2>
           <p className="mt-4 text-lg">
@@ -41,18 +43,13 @@ const Home = () => {
           <p className="mt-4 text-lg">
             Sign up and create an account to get started with hiring or offering your professional services.
           </p>
-          <button className="mt-4 bg-blue-500 text-white py-2 px-6 rounded-full hover:bg-blue-600">
+          <button onClick={()=>{navigate('/jobs')}} className="mt-4 bg-blue-500 text-white py-2 px-6 rounded-full hover:bg-blue-600">
             Get Started
           </button>
         </section>
-      </main> */}
+      </main>
 
-      {/* Footer Section */}
-      <footer className="bg-gray-800 text-white py-4">
-        <div className="container mx-auto text-center">
-          <p>&copy; 2023 Akatsuki. All rights reserved.</p>
-        </div>
-      </footer>
+      
     </div>
   );
 };
