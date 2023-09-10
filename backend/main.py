@@ -89,8 +89,13 @@ def upload_file():
         stats = activate_scrappers(github_link, leetcode_link)
         print("stats :",stats)
 
+        db = client["utils"]
+        collections = db['job_description']
+
         data ={
             "job_d" : name_parts[-1],
+            "username" : name_parts[0],
+            'company': collections.find_one({"id": name_parts[-1]}).get("company"),
             "results": True,
             "eye_contact_time": eye_contact_time,
             "Jd_score": score,
@@ -133,6 +138,19 @@ def get_user_data():
     print(response)
     
     return jsonify(response)
+
+@app.route('/get_jd', methods=['GET'])
+def get_data():
+    # Query the collection to retrieve all documents
+    db = client["utils"]
+    collections = db['job_description']
+    all_documents = collections.find()
+    
+    # Convert the cursor to a list of dictionaries
+    document_list = list(all_documents)
+    
+    # Return the list of dictionaries as JSON
+    return jsonify(document_list)
 
 if __name__ == '__main__':
     app.run(debug=True, port=8000)
