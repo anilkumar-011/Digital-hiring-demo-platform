@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 
 function Interview(jobs) {
+  const navigate =useNavigate()
   const [job, setJob] = useState(
     {
       "id": 0,
@@ -69,13 +71,15 @@ function Interview(jobs) {
             "Content-Type": "multipart/form-data",
             'id':jobIndex,
             'username':localStorage.getItem('username')
-            
+
           },
         });
 
         if (response.status === 200) {
           console.log("Video uploaded successfully:", response.data);
           setUploadVideo(true);
+          navigate('/home')
+
         } else {
           console.error("Failed to upload video.");
         }
@@ -93,42 +97,42 @@ function Interview(jobs) {
     <>
       {
         uploadResume && (
-          <div className="min-h-screen text-center bg-gray-200 p-4">
-            <div className="bg-stone-200 container mx-auto p-4 mt-8 border-2 border-gray-400 shadow-xl w-[60%] h-96 rounded-2xl">
-              <h2 className="text-2xl font-semibold text-center mb-4">
-                Upload Your Resume
-              </h2>
-              <div className="flex flex-col w-[40%] mx-auto my-10">
-                <img
-                  src="https://img.freepik.com/free-vector/modern-resume-template_23-2147836674.jpg?size=626&ext=jpg&ga=GA1.2.1807596171.1678537696&semt=ais"
-                  alt="Resume upload"
-                  className="w-40 h-40 rounded-full mx-auto mb-4"
-                />
-                <input
-                  type="file"
-                  accept=".pdf,.doc,.docx"
-                  onChange={handleResumeUpload}
-                  className="border p-2 rounded-md"
-                />
-                {resume && (
-                  <p className="mt-4">Uploaded Resume: {resume.name}</p>
-                )}
+      //     <div className="min-h-screen text-center bg-gray-200 p-4">
+      //       <div className="bg-stone-200 container mx-auto p-4 mt-8 border-2 border-gray-400 shadow-xl w-[60%] h-96 rounded-2xl">
+      //         <h2 className="text-2xl font-semibold text-center mb-4">
+      //           Upload Your Resume
+      //         </h2>
+      //         <div className="flex flex-col w-[40%] mx-auto my-10">
+      //           <img
+      //             src="https://img.freepik.com/free-vector/modern-resume-template_23-2147836674.jpg?size=626&ext=jpg&ga=GA1.2.1807596171.1678537696&semt=ais"
+      //             alt="Resume upload"
+      //             className="w-40 h-40 rounded-full mx-auto mb-4"
+      //           />
+      //           <input
+      //             type="file"
+      //             accept=".pdf,.doc,.docx"
+      //             onChange={handleResumeUpload}
+      //             className="border p-2 rounded-md"
+      //           />
+      //           {resume && (
+      //             <p className="mt-4">Uploaded Resume: {resume.name}</p>
+      //           )}
 
-                <button
-                  className="w-80 text-xl bg-blue-400 p-4 mt-28 mb-10 rounded-xl"
-                  onClick={handleUploadClick}
-                >
-                  Upload Resume and Next
-                </button>
+      //           <button
+      //             className="w-80 text-xl bg-blue-400 p-4 mt-28 mb-10 rounded-xl"
+      //             onClick={handleUploadClick}
+      //           >
+      //             Upload Resume and Next
+      //           </button>
 
-              </div>
-              {console.log(resume)}
-            </div>
-          </div>
-        )
-      }
-      {
-        !uploadResume && (
+      //         </div>
+      //         {console.log(resume)}
+      //       </div>
+      //     </div>
+      //   )
+      // }
+      // {
+      //   !uploadResume && (
           <div className="min-h-screen bg-gray-200 p-4">
             <div className="bg-stone-200 container mx-auto p-4 mt-8 border-2 border-gray-400 shadow-xl w-[60%] h-96 rounded-2xl">
               <h2 className="text-2xl font-semibold text-center mb-4">
@@ -151,7 +155,7 @@ function Interview(jobs) {
                 )}
 
                 <button
-                  className="w-80 text-xl bg-blue-400 p-4 my-4 rounded-xl"
+                  className="w-80 text-xl bg-blue-400 p-4 mt-28 mb-10 rounded-xl"
                   onClick={handleVideoUploadClick}
                 >
                   Upload Video and Next
