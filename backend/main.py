@@ -5,6 +5,7 @@ from pymongo import MongoClient
 
 from eye_tracker import eye_tracker_func
 from ATT import transcribe
+from face_comparision import face_compare
 from scrappers import activate_scrappers
 from pymongo import MongoClient
 from bson import ObjectId  # Import ObjectId from bson module
@@ -44,9 +45,8 @@ def signup():
         }
 
         print(user)
-
+        db = client["results"]
         user_collection = db[user.get("name")]
-        # Insert the user object into the database
         user_id = user_collection.insert_one(user).inserted_id
         return jsonify({"message": f"User registered with ID: {user_id}"}), 201
     else:
@@ -81,11 +81,17 @@ def upload_file():
         name_parts = file_name.split('_')
         name_parts[-1] = name_parts[-1].split('.')[0]
 
-        # eye_contact_time = eye_tracker_func(uploaded_file_path)
-        # print("eye_contact_time :",eye_contact_time)
+        eye_contact_time = eye_tracker_func(uploaded_file_path)
+        print("eye_contact_time :",eye_contact_time)
 
         score = transcribe(uploaded_file_path)
         print("Jd_score", score)
+
+        face_matched_percentage = face_compare(uploaded_file_path)
+        # if(face_matched_percentage > 50):
+        #     face_matched = True
+        # else:
+        #     face_matched = False
 
         github_link = "https://github.com/PavanSETTEM-003"
         leetcode_link = "https://leetcode.com/2010040084__pavan/"
@@ -102,8 +108,10 @@ def upload_file():
             "username" : name_parts[0],
             'company': temp_company.get("company"),
             "results": True,
-            "eye_contact_time": 0,
+            "eye_contact_time": eye_contact_time,
+            
             "Jd_score": score,
+            "face_matched": face_matched_percentage,
             'leetcode': {
                 'problem_sloved': stats[-2],
                 'active days': stats[-1],
