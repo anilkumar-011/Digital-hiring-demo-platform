@@ -218,6 +218,23 @@ function Navigate() {
           <Route path="/jobs" element={<JobListings jobs={jobs} />}></Route>
         </Routes>
       </BrowserRouter>
+
+      {/* Footer Section */}
+      <footer className="bg-gray-800 text-white py-4">
+  <div className="container mx-auto text-center">
+    <p>&copy; 2023 Akatsuki. All rights reserved.</p>
+    <div className="mt-2">
+      <a href="/privacy-policy" className="text-blue-300 hover:text-blue-400 mr-4">Privacy Policy</a>
+      <a href="/terms-of-service" className="text-blue-300 hover:text-blue-400">Terms of Service</a>
+    </div>
+    <div className="mt-4">
+      <a href="https://www.facebook.com/akatsuki" target="_blank" rel="noopener noreferrer" className="text-blue-300 hover:text-blue-400 mr-4">Facebook</a>
+      <a href="https://twitter.com/akatsuki" target="_blank" rel="noopener noreferrer" className="text-blue-300 hover:text-blue-400 mr-4">Twitter</a>
+      <a href="https://www.linkedin.com/company/akatsuki" target="_blank" rel="noopener noreferrer" className="text-blue-300 hover:text-blue-400">LinkedIn</a>
+    </div>
+  </div>
+</footer>
+
     </div>
   );
 };

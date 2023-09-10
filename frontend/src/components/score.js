@@ -18,8 +18,10 @@ import { Line, Bar, Pie,Doughnut } from "react-chartjs-2";
 //     },
 //   ],
 // };
-
-const response = {
+const scores=localStorage.getItem('scores')
+console.log(scores)
+const response = 
+{
     'eyecontact': 20,
     'face_matched': true,
     'jd_score': 30,
