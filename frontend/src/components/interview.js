@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import VideoRecorder from './VideoRecorder';
+import axios from 'axios';
+
 
 
 function Interview(jobs) {
@@ -18,9 +20,10 @@ function Interview(jobs) {
       ]
     }
   )
+  const [jobIndex, setJobIndex] = useState(0)
   useEffect(() => {
     const jobUrl = window.location.href.split('/');
-    const jobIndex = jobUrl[jobUrl.length - 1];
+    setJobIndex(jobUrl[jobUrl.length - 1]);
     setJob(jobs[jobIndex]);
 
   })
@@ -33,22 +36,72 @@ function Interview(jobs) {
     setResume(file);
   };
 
-  // video upload
-  const [isVideoOn, setIsVideoOn] = useState(false);
-
-  const toggleVideo = () => {
-    setIsVideoOn((prevState) => !prevState);
+  const handleUploadClick = () => {
+    if (!resume) {
+      alert("Please upload a resume before proceeding.");
+    } else {
+      // Perform your upload logic here
+      setUploadResume(false);
+    }
   };
+
+  // video upload
+  const [video, setVideo] = useState(null);
+  const [uploadVideo, setUploadVideo] = useState(false);
+
+  const handleVideoUpload = (e) => {
+    const selectedVideo = e.target.files[0];
+    setVideo(selectedVideo);
+  };
+
+  const handleVideoUploadClick = async () => {
+    if (!video) {
+      alert("Please upload a video before proceeding.");
+    } else {
+      // Perform your upload logic here
+
+      try {
+        const formData = new FormData();
+        formData.append("video", video);
+
+        // Replace with your API endpoint
+        const response = await axios.post("http://127.0.0.1:8000/upload", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+
+        if (response.status === 200) {
+          console.log("Video uploaded successfully:", response.data);
+          setUploadVideo(true);
+        } else {
+          console.error("Failed to upload video.");
+        }
+      } catch (error) {
+        console.error("Error uploading video:", error);
+      }
+      setUploadVideo(true);
+    }
+  };
+
+
+
 
   return (
     <>
       {
         uploadResume && (
-          <div className="min-h-screen bg-gray-200 p-4">
-
-            <div className=" bg-stone-200 container mx-auto p-4 mt-8 border-2 border-gray-400 shadow-xl w-[60%] h-96 rounded-2xl">
-              <h2 className="text-2xl font-semibold text-center mb-4">Upload Your Resume</h2>
-              <div className=' flex flex-col w-[40%] mx-auto my-20'>
+          <div className="min-h-screen text-center bg-gray-200 p-4">
+            <div className="bg-stone-200 container mx-auto p-4 mt-8 border-2 border-gray-400 shadow-xl w-[60%] h-96 rounded-2xl">
+              <h2 className="text-2xl font-semibold text-center mb-4">
+                Upload Your Resume
+              </h2>
+              <div className="flex flex-col w-[40%] mx-auto my-10">
+                <img
+                  src="https://img.freepik.com/free-vector/modern-resume-template_23-2147836674.jpg?size=626&ext=jpg&ga=GA1.2.1807596171.1678537696&semt=ais"
+                  alt="Resume upload"
+                  className="w-40 h-40 rounded-full mx-auto mb-4"
+                />
                 <input
                   type="file"
                   accept=".pdf,.doc,.docx"
@@ -56,44 +109,57 @@ function Interview(jobs) {
                   className="border p-2 rounded-md"
                 />
                 {resume && (
-                  <p className="mt-4">
-                    Uploaded Resume: {resume.name}
-                  </p>
+                  <p className="mt-4">Uploaded Resume: {resume.name}</p>
                 )}
 
-                <button className=' w-80 bg-blue-400 mt-10 p-4 rounded-xl ' onClick={() => { setUploadResume(false || !resume) }}> Upload Resume and Next</button>
+                <button
+                  className="w-80 text-xl bg-blue-400 p-4 mt-28 mb-10 rounded-xl"
+                  onClick={handleUploadClick}
+                >
+                  Upload Resume and Next
+                </button>
+
               </div>
               {console.log(resume)}
             </div>
           </div>
         )
       }
-
       {
         !uploadResume && (
-          <div className="min-h-screen bg-blue-200 flex flex-col items-center justify-center p-10">
-            <div className="mb-4 text-center">
-              <h1 className="text-3xl font-semibold mb-2">Video Interview Room</h1>
-              <p className="text-gray-500">Join the interview session</p>
-            </div>
-            <div className="mb-4 bg-white w-[80%]">
-              {!isVideoOn ? (
-                <div className="h-64 flex items-center justify-center border border-gray-300 rounded-lg">
-                  <p className="text-3xl text-gray-600">All The Best</p>
-                </div>
-              ) : (
-                <div className=" border border-gray-3 rounded-lg relative">
-                  <VideoRecorder />
-                </div>
-              )}
-            </div>
-            <button
-              onClick={toggleVideo}
-              className={!isVideoOn ? "mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600" : "mt-4 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"}
-            >
-              {!isVideoOn ? 'Start Interview' : 'End Interview'}
-            </button>
+          <div className="min-h-screen bg-gray-200 p-4">
+            <div className="bg-stone-200 container mx-auto p-4 mt-8 border-2 border-gray-400 shadow-xl w-[60%] h-96 rounded-2xl">
+              <h2 className="text-2xl font-semibold text-center mb-4">
+                Upload Your Video
+              </h2>
+            <img
+              src="https://img.freepik.com/free-vector/image-upload-concept-illustration_114360-996.jpg?size=626&ext=jpg&ga=GA1.2.1807596171.1678537696&semt=ais"
+              alt="Resume upload"
+              className="w-40 h-40 rounded-full mx-auto mb-4"
+            />
+              <div className="flex flex-col w-[40%] mx-auto my-10">
+                <input
+                  type="file"
+                  accept=".mp4,.mov,.avi"
+                  onChange={handleVideoUpload}
+                  className="border p-2 rounded-md"
+                />
+                {video && (
+                  <p className="mt-4">Uploaded Video: {video.name}</p>
+                )}
 
+                <button
+                  className="w-80 text-xl bg-blue-400 p-4 my-4 rounded-xl"
+                  onClick={handleVideoUploadClick}
+                >
+                  Upload Video and Next
+                </button>
+                {!video && uploadVideo && (
+                  <p className="text-red-500">Please upload a video.</p>
+                )}
+              </div>
+              {console.log(video)}
+            </div>
           </div>
         )
       }

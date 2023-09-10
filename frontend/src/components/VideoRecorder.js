@@ -1,127 +1,150 @@
-import React, { useState, useRef, useEffect } from "react";
+// src/components/VideoRecorder.js
+
+import React, { Component } from "react";
 import RecordRTC from "recordrtc";
 
-const VideoRecorder = () => {
-  const [recording, setRecording] = useState(false);
-  const [videoSrc, setVideoSrc] = useState(null);
-  const [recorder, setRecorder] = useState(null);
-  const [showControls, setShowControls] = useState(false);
-  const [jobIndex, setJobIndex] = useState(false);
-  const videoElement = useRef(null);
+class VideoRecorder extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      recording: false,
+      videoSrc: null,
+      recorder: null,
+      id: props.id,
+    };
+    this.videoElement = React.createRef();
+  }
 
-  useEffect(() => {
-    const jobUrl = window.location.href.split('/');
-    setJobIndex(jobUrl[jobUrl.length - 1]);
-
-  })
-  console.log(jobIndex)
-  const startRecording = async () => {
+  startRecording = async () => {
     const stream = await navigator.mediaDevices.getUserMedia({
       audio: true,
       video: true,
     });
 
-    const newRecorder = new RecordRTC(stream, {
+    const recorder = new RecordRTC(stream, {
       type: "video",
       mimeType: "video/webm",
     });
 
-    newRecorder.startRecording();
+    recorder.startRecording();
 
-    setRecording(true);
-    setRecorder(newRecorder);
-    setShowControls(false);
-
-    // Set the video stream as the source for the live preview
-    videoElement.current.srcObject = stream;
+    this.setState({
+      recording: true,
+      recorder,
+    });
   };
 
-  const stopRecording = () => {
-    if (recorder) {
-      recorder.stopRecording(() => {
-        const videoBlob = recorder.getBlob();
-        const videoUrl = URL.createObjectURL(videoBlob);
-        setVideoSrc(videoUrl);
-        setRecording(false);
-        setShowControls(true);
+  stopRecording = () => {
+    const { recorder } = this.state;
+    recorder.stopRecording(() => {
+      const videoBlob = recorder.getBlob();
+      const videoUrl = URL.createObjectURL(videoBlob);
+      this.setState({
+        recording: false,
+        videoSrc: videoUrl,
       });
-    }
+    });
   };
 
-  const saveRecording = async () => {
-    if (recorder) {
-      try {
-        const blob = await recorder.getBlob();
-        const formData = new FormData();
-        formData.append("video", blob, localStorage.getItem('email')+'-'+jobIndex+".mp4");
+  // SaveRecording = async () => {
+  //   const { recorder } = this.state;
 
-        const response = await fetch("http://127.0.0.1:8000/upload", {
-          method: "POST",
-          body: formData,
-        });
+  //   try {
+  //     const blob = await recorder.getBlob(); // Get the video blob from the recorder
+  //     const formData = new FormData();
+  //     formData.append("video", blob);
 
-        if (response.ok) {
-          console.log("Video sent to the server successfully.");
-        } else {
-          console.error("Failed to send video to the server.");
-        }
-      } catch (error) {
-        console.error("Error sending video to the server:", error);
+  //     const response = await fetch("http://127.0.0.1:8000/upload", {
+  //       method: "POST",
+  //       body: formData,
+  //     });
+ 
+  //     if (response.ok) {
+  //       const jsonResponse = await response.json();
+  //       console.log("Video sent to the server successfully.", jsonResponse);
+  //     } else {
+  //       console.error("Failed to send video to the server.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error sending video to the server:", error);
+  //   }
+  // };
+
+  SaveRecording = async () => {
+    const { recorder } = this.state;
+
+    try {
+      if (!recorder) {
+        console.error("No recorder found.");
+        return;
       }
+
+      const webmBlob = await recorder.getBlob(); // Get the video blob from the recorder in webm format
+
+      // Convert the webm video to mp4 format using RecordRTC's built-in function
+      const mp4Blob = await RecordRTC.WAVToMP4(webmBlob);
+
+      const formData = new FormData();
+      formData.append("video", mp4Blob, "video.mp4"); // Save as "video.mp4"
+
+      const response = await fetch("http://127.0.0.1:8000/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        const jsonResponse = await response.json();
+        console.log("Video sent to the server successfully.", jsonResponse);
+      } else {
+        console.error("Failed to send video to the server.");
+      }
+    } catch (error) {
+      console.error("Error sending video to the server:", error);
     }
   };
 
-  const retakeRecording = () => {
-    if (recorder) {
-      recorder.reset();
-      setVideoSrc(null);
-      setShowControls(false);
-    }
-  };
 
-  return (
-    <div className=" mx-auto my-auto w-[80%] p-2">
-      <video
-        ref={videoElement}
-        src={videoSrc}
-        className="border rounded-lg mx-auto w-[50%] h-[30%]"
-        controls
-      />
-      <div className="mt-4 mx-auto flex justify-center">
-        {recording ? (
-          <button
-            onClick={stopRecording}
-            className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg mr-2"
-          >
-            Stop Recording
-          </button>
-        ) : (
-          <button
-            onClick={startRecording}
-            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg"
-          >
-            Start Recording
-          </button>
-        )}
-        {showControls && (
-          <>
+  render() {
+    const { recording, videoSrc, id } = this.state;
+
+    return (
+      <div className="p-4">
+
+        {console.log(id)}
+        <video
+          ref={this.videoElement}
+          src={videoSrc}
+          className="border h-96 w-96 text-center mx-auto rounded-lg"
+          controls
+        />
+        <div className="mt-4 text-center">
+          {recording ? (
             <button
-              onClick={retakeRecording}
-              className="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg ml-2"
+              onClick={this.stopRecording}
+              className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg"
             >
-              Retake
+              Stop Recording
             </button>
+          ) : (
             <button
-              onClick={saveRecording}
+              onClick={this.startRecording}
+              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg"
+            >
+              Start Recording
+            </button>
+          )}
+          {!recording && videoSrc && (
+            <button
+              onClick={this.SaveRecording}
               className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg ml-2"
             >
               Save Recording
             </button>
-          </>
-        )}
+          )}
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default VideoRecorder;
