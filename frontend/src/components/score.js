@@ -99,27 +99,29 @@ const Score = () => {
   return (
     <div className="scoreMain">
         <div className="text-center text-3xl font-semibold mt-3">Score Summary</div>
+
         <div className="scoreMainCon">
-            <div className="scoreMainConIn">
-                <h1>Eye Contact : {response.eyecontact}</h1>
+        
+        <div className="scoreMainConLeet pl-10">
+            <div className="my-auto">
+            <h1 className="text-4xl font-bold mb-15">Overall Score Analysis</h1>
+            <div className="p-5">
+            <h1 className="text-6xl font-bold mb-15"> {overallScore.toFixed(2)}/100 </h1>
             </div>
-            <div className="scoreMainConIn">
-                {response.face_matched? <h1>Face Matched : True</h1> : <h1>Face Matched : False</h1>}
+            </div>
+            <div className="chart-container ml-auto">
+                <Doughnut
+                    data={overallScoreData}
+                />
+                
             </div>
         </div>
-        <div className="scoreMainCon">
-            <div className="scoreMainConIn">
-                <h1>JD Score : {response.jd_score}</h1>
-            </div>
-            <div className="scoreMainConIn">
-                <h1>User Name : {response.github.username}</h1>
-                <h1>Last Commit : {response.github["last commit"]}</h1>
-            </div>
-            
         </div>
+        <h1 className="text-center  text-3xl font-bold mt-10 ">Leetcode Stats</h1>
         <div className="scoreMainCon">
-            
+        
         <div className="scoreMainConLeet">
+        
             <div className="chart-container ml-auto">
                 
                 <Pie
@@ -144,24 +146,27 @@ const Score = () => {
             </div>
         </div>
         </div>
-
+        {/* <div className="scoreMainCon">
+            <div className="scoreMainConIn">
+                <h1>Eye Contact : {response.eyecontact}</h1>
+            </div>
+            <div className="scoreMainConIn">
+                {response.face_matched? <h1>Face Matched : True</h1> : <h1>Face Matched : False</h1>}
+            </div>
+        </div>
         <div className="scoreMainCon">
+            <div className="scoreMainConIn">
+                <h1>JD Score : {response.jd_score}</h1>
+            </div>
+            <div className="scoreMainConIn">
+                <h1>User Name : {response.github.username}</h1>
+                <h1>Last Commit : {response.github["last commit"]}</h1>
+            </div>
+            
+        </div> */}
         
-        <div className="scoreMainConLeet">
-            <div className="my-auto">
-            <h1 className="text-4xl font-bold mb-15">Overall Score Analysis</h1>
-            <div className="p-5">
-            <h1 className="text-6xl font-bold mb-15"> {overallScore.toFixed(2)}/100 </h1>
-            </div>
-            </div>
-            <div className="chart-container ml-auto">
-                <Doughnut
-                    data={overallScoreData}
-                />
-                
-            </div>
-        </div>
-        </div>
+
+        
 
 
       
