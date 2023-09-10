@@ -1,13 +1,14 @@
 import React, { useContext } from "react";
 import "chart.js/auto";
 import "../components/sample.css";
+import { MyContext } from "../components/result";
+
 
 import { Line, Bar, Pie,Doughnut } from "react-chartjs-2";
 const Score = () => {
 
-const scores=localStorage.getItem('scores')
 
-  const response =useContext(MyContext)
+  const response = useContext(MyContext);
 
   const res = response.leetcode[0];
 

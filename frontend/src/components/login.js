@@ -17,7 +17,6 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    localStorage.setItem('username', username);
     console.log(localStorage.getItem('username'));
 
     // Implement your login logic here

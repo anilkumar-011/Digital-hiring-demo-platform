@@ -60,7 +60,6 @@ function Navigate() {
           </div>
         </div>
         <Routes>
-          <MyProvider>
             <Route path="/" element={<Home />}></Route>
             <Route
               path="/interview/:id"
@@ -71,7 +70,6 @@ function Navigate() {
             <Route path="/signup" element={<SignUp />}></Route>
             <Route path="/score" element={<Score />}></Route>
             <Route path="/jobs" element={<JobListings jobs={jobs} />}></Route>
-          </MyProvider>
         </Routes>
       </BrowserRouter>
 

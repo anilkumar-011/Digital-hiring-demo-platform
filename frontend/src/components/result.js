@@ -1,12 +1,13 @@
 // src/components/ResultsPage.js
 
 import React, { Children, useEffect, useState } from "react";
-import Score from "./score";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Score from "../components/score";
+
+export const MyContext = React.createContext();
 
 const ResultsPage = () => {
-  const MyContext = React.createContext();
 
   const navigate = useNavigate();
 
@@ -53,6 +54,9 @@ const ResultsPage = () => {
     <div className="min-h-screen bg-gray-100 p-4">
       <div className="container mx-auto">
         <h1 className="text-2xl font-semibold mb-4">Interview Results</h1>
+        <MyContext.Provider value={results}>
+          <Score /> 
+        </MyContext.Provider>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {results.map((result, index) => (
             
@@ -60,11 +64,11 @@ const ResultsPage = () => {
               key={index}
               className="bg-white p-4 border border-gray-300 rounded-lg shadow-md"
             >
-              <p className=" m-4 text-4xl font-normal">{result.company}</p>
+              {/* <p className=" m-4 text-4xl font-normal">{result.company}</p>
               <div className=" float-left">
                 <p> Job Discription Score : {result.Jd_score}</p>
                 <p> Eye contact in seconds: {result.eye_contact_time}</p>
-              </div>
+              </div> */}
               <button
                 className=" font-medium float-right mx-4 p-4 bg-blue-500 text-white rounded-lg"
                 onClick={()=>{
