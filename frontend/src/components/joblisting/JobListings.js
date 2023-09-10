@@ -67,7 +67,7 @@ const JobListings = ({ jobs }) => {
         <div className="fixed top-0 left-0 right-0 bottom-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
           <div className="bg-white w-[60%] shadow-lg rounded-lg overflow-hidden relative">
             <div className="px-6 py-4">
-              <div className="font-bold text-2xl mb-2 flex justify-center items-center mb-10">{selectedJob.title} Details</div>
+              <div className="font-bold text-2xl flex justify-center items-center mb-10">{selectedJob.title} Details</div>
               <div className="text-base text-gray-700">
                 <p>
                   <strong>Requirements:</strong>
