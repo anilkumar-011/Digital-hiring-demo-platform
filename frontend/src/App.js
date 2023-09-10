@@ -1,12 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import 'chart.js/auto';
 import Home from "./components/home";
 import ResultsPage from "./components/result";
 import Interview from "./components/interview";
 import Login from "./components/login";
 import JobListings from "./components/joblisting/JobListings";
 import SignUp from "./components/signup";
+import Score from "./components/score.js"
 
 const jobs = [
   {
@@ -212,6 +214,7 @@ function Navigate() {
           <Route path="/results" element={<ResultsPage />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/signup" element={<SignUp />}></Route>
+          <Route path="/score" element={<Score />}></Route>
           <Route path="/jobs" element={<JobListings jobs={jobs} />}></Route>
         </Routes>
       </BrowserRouter>
