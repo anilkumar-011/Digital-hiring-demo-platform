@@ -46,13 +46,46 @@ class VideoRecorder extends Component {
     });
   };
 
+  // SaveRecording = async () => {
+  //   const { recorder } = this.state;
+
+  //   try {
+  //     const blob = await recorder.getBlob(); // Get the video blob from the recorder
+  //     const formData = new FormData();
+  //     formData.append("video", blob);
+
+  //     const response = await fetch("http://127.0.0.1:8000/upload", {
+  //       method: "POST",
+  //       body: formData,
+  //     });
+ 
+  //     if (response.ok) {
+  //       const jsonResponse = await response.json();
+  //       console.log("Video sent to the server successfully.", jsonResponse);
+  //     } else {
+  //       console.error("Failed to send video to the server.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error sending video to the server:", error);
+  //   }
+  // };
+
   SaveRecording = async () => {
     const { recorder } = this.state;
 
     try {
-      const blob = await recorder.getBlob(); // Get the video blob from the recorder
+      if (!recorder) {
+        console.error("No recorder found.");
+        return;
+      }
+
+      const webmBlob = await recorder.getBlob(); // Get the video blob from the recorder in webm format
+
+      // Convert the webm video to mp4 format using RecordRTC's built-in function
+      const mp4Blob = await RecordRTC.WAVToMP4(webmBlob);
+
       const formData = new FormData();
-      formData.append("video", blob);
+      formData.append("video", mp4Blob, "video.mp4"); // Save as "video.mp4"
 
       const response = await fetch("http://127.0.0.1:8000/upload", {
         method: "POST",
@@ -69,6 +102,7 @@ class VideoRecorder extends Component {
       console.error("Error sending video to the server:", error);
     }
   };
+
 
   render() {
     const { recording, videoSrc, id } = this.state;
