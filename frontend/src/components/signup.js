@@ -33,14 +33,11 @@ class SignupPage extends Component {
     console.log(data)
     axios.post("http://127.0.0.1:8000/signup", data)
       .then((response) => {
-<<<<<<< HEAD
         console.log(response, data);
         if (response.status === 201) {
           window.location.href = "/login";
         }
-=======
         console.log(response);
->>>>>>> 54374989f19f322b3a82713868c9e9b274c805c4
       })
       .catch((error) => {
         console.log(error);
@@ -61,7 +58,6 @@ class SignupPage extends Component {
 
   render() {
     return (
-<<<<<<< HEAD
       <div className="min-h-screen items-center justify-center bg-gray-100 p-1">
         <div className="font-semibold bg-gradient-to-br mt-28 from-blue-200 to-purple-200 p-8 rounded-lg shadow-md w-[60%] mx-auto">
           <div className="text-center mb-4 p-20 float-right">
@@ -199,62 +195,61 @@ class SignupPage extends Component {
             </button>
           </form>
         </div>
-=======
-      <div>
-        <h1>Signup</h1>
-        <form onSubmit={this.handleSubmit}>
-          <input
-            name="name"
-            type="text"
-            placeholder="Name"
-            value={this.state.name}
-            onChange={this.handleChange}
-          />
-          <input
-            name="email"
-            type="email"
-            placeholder="Email"
-            value={this.state.email}
-            onChange={this.handleChange}
-          />
-          <input
-            name="password"
-            type="password"
-            placeholder="Password"
-            value={this.state.password}
-            onChange={this.handleChange}
-          />
-          <input
-            name="qualification"
-            type="text"
-            placeholder="Qualification"
-            value={this.state.qualification}
-            onChange={this.handleChange}
-          />
-          <input
-            name="github"
-            type="text"
-            placeholder="Github"
-            value={this.state.github}
-            onChange={this.handleChange}
-          />
-          <input
-            name="linkedin"
-            type="text"
-            placeholder="LinkedIn"
-            value={this.state.linkedin}
-            onChange={this.handleChange}
-          />
-          <input
-            name="leetcode"
-            type="text"
-            placeholder="Leetcode"
-            value={this.state.leetcode}
-            onChange={this.handleChange}
-          />
-          <button type="submit">Signup</button>
-        </form>
->>>>>>> 54374989f19f322b3a82713868c9e9b274c805c4
+        <div>
+          <h1>Signup</h1>
+          <form onSubmit={this.handleSubmit}>
+            <input
+              name="name"
+              type="text"
+              placeholder="Name"
+              value={this.state.name}
+              onChange={this.handleChange}
+            />
+            <input
+              name="email"
+              type="email"
+              placeholder="Email"
+              value={this.state.email}
+              onChange={this.handleChange}
+            />
+            <input
+              name="password"
+              type="password"
+              placeholder="Password"
+              value={this.state.password}
+              onChange={this.handleChange}
+            />
+            <input
+              name="qualification"
+              type="text"
+              placeholder="Qualification"
+              value={this.state.qualification}
+              onChange={this.handleChange}
+            />
+            <input
+              name="github"
+              type="text"
+              placeholder="Github"
+              value={this.state.github}
+              onChange={this.handleChange}
+            />
+            <input
+              name="linkedin"
+              type="text"
+              placeholder="LinkedIn"
+              value={this.state.linkedin}
+              onChange={this.handleChange}
+            />
+            <input
+              name="leetcode"
+              type="text"
+              placeholder="Leetcode"
+              value={this.state.leetcode}
+              onChange={this.handleChange}
+            />
+            <button type="submit">Signup</button>
+          </form>
+        </div>
       </div>
     );
   }
