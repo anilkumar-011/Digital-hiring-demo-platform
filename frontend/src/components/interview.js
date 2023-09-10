@@ -67,8 +67,6 @@ function Interview(jobs) {
         const response = await axios.post("http://127.0.0.1:8000/upload", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
-            'id':jobIndex,
-            'username':localStorage.getItem('username')
             
           },
         });
