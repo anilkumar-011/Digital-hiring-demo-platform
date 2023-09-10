@@ -1,44 +1,71 @@
-
-# import moviepy.editor as mp
-# import speech_recognition as sr
-
-# # Load the video
-# video = mp.VideoFileClip("C://Users//srika//OneDrive//Desktop//Sree//Hello WD//Hackthon//test_audio.mp4")
-
-# # Extract the audio from the video
-# audio_file = video.audio
-# audio_file.write_audiofile("wave.wav")
-
-# # Initialize recognizer
-# r = sr.Recognizer()
-
-# # Load the audio file
-# with sr.AudioFile("wave.wav") as source:
-# 	data = r.record(source)
-
-# # Convert speech to text
-# text = r.recognize_google(data)
-
-# # Print the text
-# print("\nThe resultant text from video is: \n")
-# print(text)
-# with open('readme.txt', 'a') as f:
-#         f.write(''.join(text))
-
-
-# Import libraries
 import speech_recognition as sr
 import os
+import moviepy.editor as mp
 from pydub import AudioSegment
 from pydub.silence import split_on_silence
 
-# Create a speech recognition object
-r = sr.Recognizer()
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
-def transcribe_large_audio(path):
+# from nltk.corpus import stopwords
+# import nltk
+# nltk.download('stopwords')
+
+# # Create a set of stop words 
+# stop_words = set(stopwords.words('english')) 
+
+# # Define a function to remove stop words from a result 
+# def remove_stop_words(remove_stopwords): 
+#   # Split the result into individual words 
+#   words = remove_stopwords.split() 
+#   # Use a list comprehension to remove stop words 
+#   filtered_words = [word for word in words if word not in stop_words]
+
+#   # Join the filtered words back into a result 
+#   return ' '.join(filtered_words)
+
+def comparision(transcribed_txt):
+    print("entered comparision")
+    job_description_path = "D://Hackathon//Techolution_akatsuki//backend//uploaded_files//job_description.txt"
+
+    with open(job_description_path, 'r', encoding='utf-8') as Req_File:
+        job_description = Req_File.read()
+
+
+    Match_Test = [transcribed_txt, job_description]
+
+    # Create a CountVectorizer
+    cv = CountVectorizer()
+
+    # Fit and transform the text data
+    count_matrix = cv.fit_transform(Match_Test)
+
+    # Calculate cosine similarity
+    cosine_sim = cosine_similarity(count_matrix)
+
+    # Extract the similarity value
+    MatchPercentage = cosine_sim[0][1] * 100
+    MatchPercentage = round(MatchPercentage, 2)
+
+    # Print the similarity percentage
+    print('Match Percentage is: ' + str(MatchPercentage) + '% to Requirement')
+
+    return MatchPercentage
+
+
+def transcribe(video_path):
+    print("entered transcribe")
+    # Create a speech recognition object
+    r = sr.Recognizer()
+
     """Split audio into chunks and apply speech recognition"""
     # Open audio file with pydub
-    sound = AudioSegment.from_wav(path)
+    video = mp.VideoFileClip(video_path)
+    audio_file_path = "D://Hackathon//Techolution_akatsuki//backend//uploaded_files//wave.wav"
+
+    audio_file = video.audio
+    audio_file.write_audiofile(audio_file_path)
+    sound = AudioSegment.from_wav(audio_file_path)
 
     # Split audio where silence is 700ms or greater and get chunks
     chunks = split_on_silence(sound, min_silence_len=700, silence_thresh=sound.dBFS-14, keep_silence=700)
@@ -48,7 +75,7 @@ def transcribe_large_audio(path):
     if not os.path.isdir(folder_name):
         os.mkdir(folder_name)
     
-    whole_text = ""
+    transcribed_txt = ""
     # Process each chunk
     for i, audio_chunk in enumerate(chunks, start=1):
         # Export chunk and save in folder
@@ -67,12 +94,27 @@ def transcribe_large_audio(path):
             else:
                 text = f"{text.capitalize()}. "
                 # print(chunk_filename, ":", text)
-                whole_text += text
+                transcribed_txt += text
 
+    score = comparision(transcribed_txt)
     # Return text for all chunks
-    return whole_text
+    return score
 
-result = transcribe_large_audio('wave.wav')
 
-print(result)
-print(result, file=open('result.txt', 'w'))
+# video_path = "D://Hackathon//Techolution_akatsuki//backend//uploaded_files//akka.mp4"
+# video = mp.VideoFileClip(video_path)
+
+
+# audio_file = video.audio
+# audio_file.write_audiofile("D://Hackathon//Techolution_akatsuki//backend//uploaded_files//wave.wav")
+
+# result = transcribe_large_audio("D://Hackathon//Techolution_akatsuki//backend//uploaded_files//wave.wav")
+
+# print(result)
+# print(result, file=open('result.txt', 'w'))
+
+if __name__ == '__main__':
+    print()
+#     result = transcribe("C://Users//pavan//Pictures//Camera Roll//testing.mp4")
+#     print(result)
+     

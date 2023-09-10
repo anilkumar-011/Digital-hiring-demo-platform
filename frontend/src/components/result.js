@@ -36,7 +36,7 @@ const ResultsPage = () => {
 
   useEffect(() => {
     // Make a GET request to fetch interview results
-    axios.get('http://127.0.0.1:5000/get_user_results')
+    axios.get('http://127.0.0.1:8000/get_user_results')
       .then((response) => {
         // Assuming the API response contains an array of interview results
         setResults(response.data);
