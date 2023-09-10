@@ -1,18 +1,18 @@
 // src/components/SignUp.js
 
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 
 const SignUp = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [qualification, setQualification] = useState('');
-  const [github, setGithub] = useState('');
-  const [linkedin, setLinkedin] = useState('');
-  const [leetcode, setLeetcode] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [qualification, setQualification] = useState("");
+  const [github, setGithub] = useState("");
+  const [linkedin, setLinkedin] = useState("");
+  const [leetcode, setLeetcode] = useState("");
   const [photo, setPhoto] = useState(null);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -33,9 +33,11 @@ const SignUp = () => {
   const handleGithubChange = (e) => {
     setGithub(e.target.value);
   };
+
   const handleLinkedinChange = (e) => {
     setLinkedin(e.target.value);
   };
+
   const handleLeetcodeChange = (e) => {
     setLeetcode(e.target.value);
   };
@@ -48,53 +50,55 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Create a user object with the form data
-    const user = {
-      name,
-      email,
-      password,
-      qualification,
-      github,
-      linkedin,
-      leetcode,
-    };
-    console.log(user)
-    // Send user data to the API
-    // try {
-    //   const formData = new FormData();
-    //   formData.append('photo', photo); // Append the selected photo to the form data
-    //   formData.append('user', JSON.stringify(user)); // Append user data as JSON string
+    // Create a FormData object to send both JSON data and files
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("qualification", qualification);
+    formData.append("github", github);
+    formData.append("linkedin", linkedin);
+    formData.append("leetcode", leetcode);
+    formData.append("photo", photo); // Append the selected photo to the form data
 
-    //   const response = await axios.post('https://127.0.0.1:8000/signup', formData, {
-    //     headers: {
-    //       'Content-Type': 'multipart/form-data', // Important for file upload
-    //     },
-    //   });
+    console.log(formData);
 
-    //   if (response.status === 201) {
-    //     // Successful user registration
-    //     console.log('User registered successfully:', response.data);
+    // Send user data to the Flask API
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/signup",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data", // Important for file upload
+          },
+        }
+      );
 
-    //     // Reset form fields and error message
-    //     setName('');
-    //     setEmail('');
-    //     setPassword('');
-    //     setQualification('');
-    //     setGithub('');
-    //     setLinkedin('');
-    //     setLeetcode('');
-    //     setPhoto(null);
-    //     setError('');
+      if (response.status === 201) {
+        // Successful user registration
+        console.log("User registered successfully:", response.data);
 
-    //     // Optionally, you can perform additional actions like redirecting the user
-    //   } else {
-    //     console.error('Failed to register user:', response.status);
-    //     setError('Failed to register user');
-    //   }
-    // } catch (error) {
-    //   console.error('Error registering user:', error);
-    //   setError('Error registering user');
-    // }
+        // Reset form fields and error message
+        setName("");
+        setEmail("");
+        setPassword("");
+        setQualification("");
+        setGithub("");
+        setLinkedin("");
+        setLeetcode("");
+        setPhoto(null);
+        setError("");
+
+        // Optionally, you can perform additional actions like redirecting the user
+      } else {
+        console.error("Failed to register user:", response.status);
+        setError("Failed to register user");
+      }
+    } catch (error) {
+      console.error("Error registering user:", error);
+      setError("Error registering user");
+    }
   };
 
   return (
@@ -109,7 +113,7 @@ const SignUp = () => {
           />
         </div>
         <form onSubmit={handleSubmit}>
-          <div className=' flex gap-10'>
+          <div className=" flex gap-10">
             <div>
               <div className="mb-4">
                 <label htmlFor="name" className="block text-gray-600">
@@ -213,17 +217,7 @@ const SignUp = () => {
               </div>
             </div>
           </div>
-          <div className="mb-4">
-            <label htmlFor="photo" className="block text-gray-600">
-              Photo
-            </label>
-            <input
-              type="file"
-              id="photo"
-              accept="image/*"
-              onChange={handlePhotoChange}
-            />
-          </div>
+
           {error && (
             <div className="text-red-500 mb-4 text-center">{error}</div>
           )}
