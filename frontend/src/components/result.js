@@ -1,6 +1,6 @@
 // src/components/ResultsPage.js
 
-import React, { useEffect,useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Score from './score';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -9,7 +9,7 @@ import axios from 'axios';
 const ResultsPage = () => {
   const navigate = useNavigate()
 
-  const [results, setResults] = useState([]);
+  const [results, setResults] = useState([{},{}]);
 
   useEffect(() => {
     // Make a GET request to fetch interview results
@@ -37,16 +37,11 @@ const ResultsPage = () => {
             >
               <p className=' m-4 text-4xl font-normal'>{result.company}</p>
               <div className=' float-left'>
-                <p> Status : {result.status}</p> 
+                <p> Status : {result.status}</p>
                 <p> Score: {result.score}</p>
               </div>
               <button className=' font-medium float-right mx-4 p-4 bg-blue-500 text-white rounded-lg'
                 onClick={() => {
-                  localStorage.setItem('eyecontact', result.eyecontact)
-                  localStorage.setItem('username', result.username)
-                  localStorage.setItem('company', result.company)
-                  localStorage.setItem('score', result.score)
-                  localStorage.setItem('performance', result.performance)
                   navigate('/score')
                 }}> Know more</button>
             </div>

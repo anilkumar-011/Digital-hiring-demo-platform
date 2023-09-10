@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import "chart.js/auto";

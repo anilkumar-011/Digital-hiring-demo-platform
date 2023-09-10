@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-
-
 function Interview(jobs) {
   const [job, setJob] = useState(
     {
@@ -18,29 +16,53 @@ function Interview(jobs) {
         "Excellent problem-solving skills"
       ]
     }
-  )
-  const [jobIndex, setJobIndex] = useState(0)
+  );
+
+  const [jobIndex, setJobIndex] = useState(0);
   useEffect(() => {
     const jobUrl = window.location.href.split('/');
     setJobIndex(jobUrl[jobUrl.length - 1]);
     setJob(jobs[jobIndex]);
+  }, [jobs, jobIndex]);
 
-  })
-  //  resume upload
-  const [resume, setResume] = useState(null);
-  const [uploadResume, setUploadResume] = useState(true)
+  // profile picture upload
+  const [profilePicture, setProfilePicture] = useState(null);
+  const [uploadProfilePicture, setUploadProfilePicture] = useState(true);
 
-  const handleResumeUpload = (e) => {
+  const handleProfilePictureUpload = (e) => {
     const file = e.target.files[0];
-    setResume(file);
+    setProfilePicture(file);
   };
 
-  const handleUploadClick = () => {
-    if (!resume) {
-      alert("Please upload a resume before proceeding.");
+  const handleProfilePictureUploadClick = async () => {
+    if (!profilePicture) {
+      alert("Please upload a profile picture before proceeding.");
     } else {
-      // Perform your upload logic here
-      setUploadResume(false);
+      setUploadProfilePicture(false)
+      try {
+        const formData = new FormData();
+        formData.append("profilePicture", profilePicture);
+
+        // Replace with your API endpoint for profile picture upload
+        const response = await axios.post("http://127.0.0.1:8000/photoupload", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+
+        if (response.status === 200) {
+          console.log("Profile picture uploaded successfully:", response.data);
+
+          // Once the upload is successful, you can set the uploaded profile picture URL
+          // to your user's profile data in your state or database.
+
+          setUploadProfilePicture(false);
+        } else {
+          console.error("Failed to upload profile picture.");
+        }
+      } catch (error) {
+        console.error("Error uploading profile picture:", error);
+      }
     }
   };
 
@@ -67,7 +89,6 @@ function Interview(jobs) {
         const response = await axios.post("http://127.0.0.1:8000/upload", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
-            
           },
         });
 
@@ -84,59 +105,55 @@ function Interview(jobs) {
     }
   };
 
-
-
-
   return (
     <>
       {
-        uploadResume && (
+        uploadProfilePicture && (
           <div className="min-h-screen text-center bg-gray-200 p-4">
             <div className="bg-stone-200 container mx-auto p-4 mt-8 border-2 border-gray-400 shadow-xl w-[60%] h-96 rounded-2xl">
               <h2 className="text-2xl font-semibold text-center mb-4">
-                Upload Your Resume
+                Upload Your Profile Picture
               </h2>
               <div className="flex flex-col w-[40%] mx-auto my-10">
                 <img
-                  src="https://img.freepik.com/free-vector/modern-resume-template_23-2147836674.jpg?size=626&ext=jpg&ga=GA1.2.1807596171.1678537696&semt=ais"
-                  alt="Resume upload"
+                  src="https://www.lifewire.com/thmb/TRGYpWa4KzxUt1Fkgr3FqjOd6VQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/cloud-upload-a30f385a928e44e199a62210d578375a.jpg"
+                  alt="Profile Picture upload"
                   className="w-40 h-40 rounded-full mx-auto mb-4"
                 />
                 <input
                   type="file"
-                  accept=".pdf,.doc,.docx"
-                  onChange={handleResumeUpload}
+                  accept=".jpg,.jpeg,.png"
+                  onChange={handleProfilePictureUpload}
                   className="border p-2 rounded-md"
                 />
-                {resume && (
-                  <p className="mt-4">Uploaded Resume: {resume.name}</p>
+                {profilePicture && (
+                  <p className="mt-4">Uploaded Profile Picture: {profilePicture.name}</p>
                 )}
 
                 <button
                   className="w-80 text-xl bg-blue-400 p-4 mt-28 mb-10 rounded-xl"
-                  onClick={handleUploadClick}
+                  onClick={handleProfilePictureUploadClick}
                 >
-                  Upload Resume and Next
+                  Upload Profile Picture and Next
                 </button>
 
               </div>
-              {console.log(resume)}
             </div>
           </div>
         )
       }
       {
-        !uploadResume && (
+        !uploadProfilePicture && (
           <div className="min-h-screen bg-gray-200 p-4">
             <div className="bg-stone-200 container mx-auto p-4 mt-8 border-2 border-gray-400 shadow-xl w-[60%] h-96 rounded-2xl">
               <h2 className="text-2xl font-semibold text-center mb-4">
                 Upload Your Video
               </h2>
-            <img
-              src="https://img.freepik.com/free-vector/image-upload-concept-illustration_114360-996.jpg?size=626&ext=jpg&ga=GA1.2.1807596171.1678537696&semt=ais"
-              alt="Resume upload"
-              className="w-40 h-40 rounded-full mx-auto mb-4"
-            />
+              <img
+                src="https://www.lifewire.com/thmb/TRGYpWa4KzxUt1Fkgr3FqjOd6VQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/cloud-upload-a30f385a928e44e199a62210d578375a.jpg"
+                alt="Video upload"
+                className="w-40 h-40 rounded-full mx-auto mb-4"
+              />
               <div className="flex flex-col w-[40%] mx-auto my-10">
                 <input
                   type="file"
@@ -149,7 +166,7 @@ function Interview(jobs) {
                 )}
 
                 <button
-                  className="w-80 text-xl bg-blue-400 p-4 my-4 rounded-xl"
+                  className="w-80 text-xl bg-blue-400 p-4 mt-28 mb-10 rounded-xl"
                   onClick={handleVideoUploadClick}
                 >
                   Upload Video and Next
@@ -163,8 +180,8 @@ function Interview(jobs) {
           </div>
         )
       }
-
     </>
   )
 }
+
 export default Interview;
