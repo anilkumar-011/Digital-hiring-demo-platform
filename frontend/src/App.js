@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import 'chart.js/auto';
@@ -9,6 +9,7 @@ import Login from "./components/login";
 import JobListings from "./components/joblisting/JobListings";
 import SignUp from "./components/signup";
 import Score from "./components/score.js"
+import axios from "axios";
 
 const jobs = [
   {
@@ -195,6 +196,19 @@ const jobs = [
 
 
 function Navigate() {
+  const [jobs, setJobs] = useState(null)
+  useEffect(() => {
+    // Make a GET request to fetch interview results
+    axios.get('http://127.0.0.1:8000/getjd')
+      .then((response) => {
+        // Assuming the API response contains an array of interview results
+        setJobs(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching job descriptions:', error);
+      });
+  }, []);
+
   return (
     <div>
       {/* navbar */}
@@ -221,19 +235,19 @@ function Navigate() {
 
       {/* Footer Section */}
       <footer className="bg-gray-800 text-white py-4">
-  <div className="container mx-auto text-center">
-    <p>&copy; 2023 Akatsuki. All rights reserved.</p>
-    <div className="mt-2">
-      <a href="/privacy-policy" className="text-blue-300 hover:text-blue-400 mr-4">Privacy Policy</a>
-      <a href="/terms-of-service" className="text-blue-300 hover:text-blue-400">Terms of Service</a>
-    </div>
-    <div className="mt-4">
-      <a href="https://www.facebook.com/akatsuki" target="_blank" rel="noopener noreferrer" className="text-blue-300 hover:text-blue-400 mr-4">Facebook</a>
-      <a href="https://twitter.com/akatsuki" target="_blank" rel="noopener noreferrer" className="text-blue-300 hover:text-blue-400 mr-4">Twitter</a>
-      <a href="https://www.linkedin.com/company/akatsuki" target="_blank" rel="noopener noreferrer" className="text-blue-300 hover:text-blue-400">LinkedIn</a>
-    </div>
-  </div>
-</footer>
+        <div className="container mx-auto text-center">
+          <p>&copy; 2023 Akatsuki. All rights reserved.</p>
+          <div className="mt-2">
+            <a href="/privacy-policy" className="text-blue-300 hover:text-blue-400 mr-4">Privacy Policy</a>
+            <a href="/terms-of-service" className="text-blue-300 hover:text-blue-400">Terms of Service</a>
+          </div>
+          <div className="mt-4">
+            <a href="https://www.facebook.com/akatsuki" target="_blank" rel="noopener noreferrer" className="text-blue-300 hover:text-blue-400 mr-4">Facebook</a>
+            <a href="https://twitter.com/akatsuki" target="_blank" rel="noopener noreferrer" className="text-blue-300 hover:text-blue-400 mr-4">Twitter</a>
+            <a href="https://www.linkedin.com/company/akatsuki" target="_blank" rel="noopener noreferrer" className="text-blue-300 hover:text-blue-400">LinkedIn</a>
+          </div>
+        </div>
+      </footer>
 
     </div>
   );

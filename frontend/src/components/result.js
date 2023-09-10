@@ -9,30 +9,7 @@ import axios from 'axios';
 const ResultsPage = () => {
   const navigate = useNavigate()
 
-  const [results, setResults] = useState([
-    {
-      id: 1,
-      username: 'John Doe',
-      score: 85,
-      status: ['Pending', 'Completed'],
-      company: 'xyz',
-      performance: {
-        'eyecontact': 20,
-        'face_matched': true,
-        'jd_score': 30,
-        'leetcode': {
-          'easy': 1 / 12 * 100,
-          'medium': 14 / 240 * 100,
-          'hard': 16 / 100 * 100,
-          'active days': 45,
-        },
-        'github': {
-          'username': 'xyz',
-          'last commit': 12,
-        },
-      }
-    }]
-  );
+  const [results, setResults] = useState([{},{}]);
 
   useEffect(() => {
     // Make a GET request to fetch interview results
@@ -65,11 +42,6 @@ const ResultsPage = () => {
               </div>
               <button className=' font-medium float-right mx-4 p-4 bg-blue-500 text-white rounded-lg'
                 onClick={() => {
-                  localStorage.setItem('eyecontact', result.eyecontact)
-                  localStorage.setItem('username', result.username)
-                  localStorage.setItem('company', result.company)
-                  localStorage.setItem('score', result.score)
-                  localStorage.setItem('performance', result.performance)
                   navigate('/score')
                 }}> Know more</button>
             </div>

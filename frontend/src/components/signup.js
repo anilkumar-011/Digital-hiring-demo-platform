@@ -44,17 +44,6 @@ class SignupPage extends Component {
       });
   };
 
-  handlePhotoUpload = (e) => {
-    const file = e.target.files[0]; // Get the selected file
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        // Update the state with the uploaded image data
-        this.setState({ profilePhoto: reader.result });
-      };
-      reader.readAsDataURL(file); // Read the file as a data URL
-    }
-  };
 
   render() {
     return (
@@ -173,20 +162,7 @@ class SignupPage extends Component {
                 </div>
               </div>
             </div>
-            <div className="mb-4">
-              <label htmlFor="photo" className="block text-gray-600">
-                Profile Photo
-              </label>
-              <input
-                type="file"
-                id="photo"
-                accept=".jpg, .jpeg, .png" // Define accepted file types
-                onChange={this.handlePhotoUpload} // Add onChange event handler
-                className="w-full p-2 border rounded-md"
-                required
-              />
-            </div>
-
+          
             <button
               type="submit"
               className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
@@ -195,61 +171,7 @@ class SignupPage extends Component {
             </button>
           </form>
         </div>
-        <div>
-          <h1>Signup</h1>
-          <form onSubmit={this.handleSubmit}>
-            <input
-              name="name"
-              type="text"
-              placeholder="Name"
-              value={this.state.name}
-              onChange={this.handleChange}
-            />
-            <input
-              name="email"
-              type="email"
-              placeholder="Email"
-              value={this.state.email}
-              onChange={this.handleChange}
-            />
-            <input
-              name="password"
-              type="password"
-              placeholder="Password"
-              value={this.state.password}
-              onChange={this.handleChange}
-            />
-            <input
-              name="qualification"
-              type="text"
-              placeholder="Qualification"
-              value={this.state.qualification}
-              onChange={this.handleChange}
-            />
-            <input
-              name="github"
-              type="text"
-              placeholder="Github"
-              value={this.state.github}
-              onChange={this.handleChange}
-            />
-            <input
-              name="linkedin"
-              type="text"
-              placeholder="LinkedIn"
-              value={this.state.linkedin}
-              onChange={this.handleChange}
-            />
-            <input
-              name="leetcode"
-              type="text"
-              placeholder="Leetcode"
-              value={this.state.leetcode}
-              onChange={this.handleChange}
-            />
-            <button type="submit">Signup</button>
-          </form>
-        </div>
+        
       </div>
     );
   }
