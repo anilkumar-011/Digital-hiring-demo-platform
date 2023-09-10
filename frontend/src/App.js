@@ -8,7 +8,6 @@ import Interview from "./components/interview";
 import Login from "./components/login";
 import JobListings from "./components/joblisting/JobListings";
 import SignUp from "./components/signup";
-import Score from "./components/score.js";
 import axios from "axios";
 
 function Navigate() {
@@ -68,7 +67,6 @@ function Navigate() {
             <Route path="/results" element={<ResultsPage />}></Route>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/signup" element={<SignUp />}></Route>
-            <Route path="/score" element={<Score />}></Route>
             <Route path="/jobs" element={<JobListings jobs={jobs} />}></Route>
         </Routes>
       </BrowserRouter>
