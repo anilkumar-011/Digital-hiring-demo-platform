@@ -1,6 +1,6 @@
 // src/components/ResultsPage.js
 
-import React, { useEffect,useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Score from './score';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -9,7 +9,30 @@ import axios from 'axios';
 const ResultsPage = () => {
   const navigate = useNavigate()
 
-  const [results, setResults] = useState([]);
+  const [results, setResults] = useState([
+    {
+      id: 1,
+      username: 'John Doe',
+      score: 85,
+      status: ['Pending', 'Completed'],
+      company: 'xyz',
+      performance: {
+        'eyecontact': 20,
+        'face_matched': true,
+        'jd_score': 30,
+        'leetcode': {
+          'easy': 1 / 12 * 100,
+          'medium': 14 / 240 * 100,
+          'hard': 16 / 100 * 100,
+          'active days': 45,
+        },
+        'github': {
+          'username': 'xyz',
+          'last commit': 12,
+        },
+      }
+    }]
+  );
 
   useEffect(() => {
     // Make a GET request to fetch interview results
@@ -37,7 +60,7 @@ const ResultsPage = () => {
             >
               <p className=' m-4 text-4xl font-normal'>{result.company}</p>
               <div className=' float-left'>
-                <p> Status : {result.status}</p> 
+                <p> Status : {result.status}</p>
                 <p> Score: {result.score}</p>
               </div>
               <button className=' font-medium float-right mx-4 p-4 bg-blue-500 text-white rounded-lg'

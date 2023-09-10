@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 class SignupPage extends Component {
   state = {
@@ -35,14 +34,26 @@ class SignupPage extends Component {
     axios
       .post("http://127.0.0.1:8000/signup", data)
       .then((response) => {
-        console.log(response,data);
-        if (response.status==201){
+        console.log(response, data);
+        if (response.status === 201) {
           window.location.href = "/login";
         }
       })
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  handlePhotoUpload = (e) => {
+    const file = e.target.files[0]; // Get the selected file
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        // Update the state with the uploaded image data
+        this.setState({ profilePhoto: reader.result });
+      };
+      reader.readAsDataURL(file); // Read the file as a data URL
+    }
   };
 
   render() {
@@ -161,6 +172,19 @@ class SignupPage extends Component {
                   />
                 </div>
               </div>
+            </div>
+            <div className="mb-4">
+              <label htmlFor="photo" className="block text-gray-600">
+                Profile Photo
+              </label>
+              <input
+                type="file"
+                id="photo"
+                accept=".jpg, .jpeg, .png" // Define accepted file types
+                onChange={this.handlePhotoUpload} // Add onChange event handler
+                className="w-full p-2 border rounded-md"
+                required
+              />
             </div>
 
             <button
