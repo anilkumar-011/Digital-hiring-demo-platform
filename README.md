@@ -49,6 +49,22 @@ This system facilitates the assessment of candidates' qualifications, skills, ed
    ```python
    python main.py
    ```
+</p>
+
+
+<h2>Run the React App</h2>
+<p>Navigate to the Frontend folder and the execute the following command:
+
+   ```python
+      npm start
+   ```
+</p>
+
+<h2>Results</h2>
+
+
+
+https://github.com/anilkumar-011/Techolution_akatsuki/assets/88257205/99bf19b2-e7e3-434c-9577-4387f323edb2
 
 
 
