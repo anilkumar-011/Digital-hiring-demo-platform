@@ -22,9 +22,9 @@ https://github.com/anilkumar-011/Techolution_akatsuki/assets/88257205/99bf19b2-e
 <ol>
   <li>Clone this repository and navigate to the cloned repository:</li>
 
-  <pre><code>git clone https://github.com/anilkumar-011/Techolution_akatsuki.git</code></pre>
+  <pre><code>git clone https://github.com/anilkumar-011/Digital-hiring-demo-platform.git</code></pre>
 
-  <pre><code>cd Techolution_akatsuki </code></pre>
+  <pre><code>cd Digital-hiring-demo-platform </code></pre>
 
   <li>navigate to the backend directory , create a virtual environment, and activate it:</li>
 <pre><code>cd backend </code></pre>
